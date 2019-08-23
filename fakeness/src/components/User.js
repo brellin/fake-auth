@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 
+import './User.scss'
+
 const User = props => {
 
     const { id, name, age, email } = props.user
@@ -11,27 +13,24 @@ const User = props => {
         setEditedUser({ ...editedUser, [e.target.name]: e.target.value })
     }
 
-    return (
+    if (editing) return (
+
         <>
+
+            <i onClick={() => setEditing(!editing)}>💩</i>
 
             <form onSubmit={(e) => {
                 e.preventDefault()
                 props.updateUser(editedUser)
                 setEditing(!editing)
             }}>
-                {editing ?
-                    <input type="text" name='name' value={editedUser.name} onChange={handleChanges} />
-                    :
-                    <h1>{name}</h1>}
-                {editing ?
-                    <input type="number" name='age' value={editedUser.age} onChange={handleChanges} />
-                    :
-                    <h2>{age}</h2>}
-                {editing ?
-                    <input type="text" name='email' value={editedUser.email} onChange={handleChanges} />
-                    :
-                    <h3>{email}</h3>}
+
+                <input type="text" name='name' value={editedUser.name} onChange={handleChanges} />
+                <input type="number" name='age' value={editedUser.age} onChange={handleChanges} />
+                <input type="text" name='email' value={editedUser.email} onChange={handleChanges} />
+
                 <button style={{ display: editing ? 'block' : 'none' }}>Updatenate</button>
+
             </form>
 
             <button
@@ -41,6 +40,19 @@ const User = props => {
                 }}
                 style={{ display: editing ? 'block' : 'none' }}
             >Removenateinator</button>
+
+        </>
+
+    )
+
+    return (
+
+        <>
+
+            <h1>{name}</h1>
+            <h2>{age}</h2>
+            <h3>{email}</h3>
+
             <button
                 onClick={() => setEditing(!editing)}
                 style={{ display: editing ? 'none' : 'block' }}
